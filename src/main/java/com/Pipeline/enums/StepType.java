@@ -1,0 +1,12 @@
+package com.Pipeline.enums;
+
+public enum StepType {
+    DATA_INGESTION,
+    DATA_TRANSFORMATION,
+    DATA_VALIDATION,
+    MACHINE_LEARNING,
+    DATA_EXPORT,
+    NOTIFICATION,
+    API_CALL,
+    FILE_PROCESSING
+}
