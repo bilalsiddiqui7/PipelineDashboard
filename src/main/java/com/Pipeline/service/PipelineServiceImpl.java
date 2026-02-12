@@ -30,7 +30,7 @@ public class PipelineServiceImpl implements PipelineService {
     @Override
     public List<PipelineSummaryDto> getAllPipelines() {
         return pipelineRepository.findAll().stream().map(p -> PipelineSummaryDto.builder().id(p.getId()).name(p.getName()).description(p.getDescription()).enabled(p.isEnabled())
-                .scheduleDescription(getScheduleDescription(p.getScheduleType(), p.getScheduleDay(), p.getScheduleDayOfMonth(), p.getScheduleTime())).stepCount(p.getSteps().size()).stepTypes(p.getSteps().stream().map(step -> step.getStepType()).distinct().toList()).build()).collect(Collectors.toList());
+                .scheduleDescription(getScheduleDescription(p.getScheduleType(), p.getScheduleDay(), p.getScheduleDayOfMonth(), p.getScheduleTime(), p.getCronExpression())).stepCount(p.getSteps().size()).stepTypes(p.getSteps().stream().map(step -> step.getStepType()).distinct().toList()).build()).collect(Collectors.toList());
     }
 
     @Override
@@ -51,6 +51,7 @@ public class PipelineServiceImpl implements PipelineService {
         pipeline.setScheduleDay(request.getScheduleDay());
         pipeline.setScheduleDayOfMonth(request.getScheduleDayOfMonth());
         pipeline.setScheduleTime(request.getScheduleTime());
+        pipeline.setCronExpression(request.getCronExpression());
 
         List<PipelineStep> steps = new ArrayList<>();
 
@@ -99,6 +100,7 @@ public class PipelineServiceImpl implements PipelineService {
         pipeline.setScheduleTime(dto.getScheduleTime());
         pipeline.setScheduleDay(dto.getScheduleDay());
         pipeline.setScheduleDayOfMonth(dto.getScheduleDayOfMonth());
+        pipeline.setCronExpression(dto.getCronExpression());
         pipeline.setUpdatedAt(Instant.now());
 
         dto.getSteps().forEach(s -> pipeline.getSteps().add(PipelineStep.builder().stepName(s.getStepName()).stepType(s.getStepType()).stepOrder(s.getStepOrder()).configType(s.getConfigType()).configContent((String) s.getConfigContent()).pipeline(pipeline).build()));
@@ -122,7 +124,7 @@ public class PipelineServiceImpl implements PipelineService {
     public PipelineResponseDto copyPipeline(Long id) {
         Pipeline original = pipelineRepository.findById(id).orElseThrow(() -> new RuntimeException("Pipeline not found"));
 
-        Pipeline copy = Pipeline.builder().name(original.getName() + " (Copy)").description(original.getDescription()).enabled(original.isEnabled()).scheduleType(original.getScheduleType()).scheduleTime(original.getScheduleTime()).scheduleDay(original.getScheduleDay()).scheduleDayOfMonth(original.getScheduleDayOfMonth()).createdAt(Instant.now()).updatedAt(Instant.now()).build();
+        Pipeline copy = Pipeline.builder().name(original.getName() + " (Copy)").description(original.getDescription()).enabled(original.isEnabled()).scheduleType(original.getScheduleType()).scheduleTime(original.getScheduleTime()).scheduleDay(original.getScheduleDay()).scheduleDayOfMonth(original.getScheduleDayOfMonth()).cronExpression(original.getCronExpression()).createdAt(Instant.now()).updatedAt(Instant.now()).build();
 
         copy.setSteps(original.getSteps().stream().map(s -> PipelineStep.builder().stepName(s.getStepName()).stepType(s.getStepType()).stepOrder(s.getStepOrder()).configType(s.getConfigType()).configContent(s.getConfigContent()).pipeline(copy).build()).collect(Collectors.toList()));
 
@@ -131,7 +133,7 @@ public class PipelineServiceImpl implements PipelineService {
 
 
     private PipelineResponseDto mapToResponse(Pipeline pipeline) {
-        return PipelineResponseDto.builder().id(pipeline.getId()).name(pipeline.getName()).description(pipeline.getDescription()).enabled(pipeline.isEnabled()).scheduleType(pipeline.getScheduleType()).scheduleTime(pipeline.getScheduleTime()).scheduleDay(pipeline.getScheduleDay()).scheduleDayOfMonth(pipeline.getScheduleDayOfMonth()).steps(pipeline.getSteps().stream().map(s -> {
+        return PipelineResponseDto.builder().id(pipeline.getId()).name(pipeline.getName()).description(pipeline.getDescription()).enabled(pipeline.isEnabled()).scheduleType(pipeline.getScheduleType()).scheduleTime(pipeline.getScheduleTime()).scheduleDay(pipeline.getScheduleDay()).scheduleDayOfMonth(pipeline.getScheduleDayOfMonth()).cronExpression(pipeline.getCronExpression()).steps(pipeline.getSteps().stream().map(s -> {
             PipelineStepDto dto = new PipelineStepDto();
             dto.setStepName(s.getStepName());
             dto.setStepType(s.getStepType());
@@ -142,7 +144,7 @@ public class PipelineServiceImpl implements PipelineService {
         }).collect(Collectors.toList())).build();
     }
 
-    public String getScheduleDescription(ScheduleType scheduleType, DayOfWeek scheduleDay, Integer scheduleDayOfMonth, LocalTime scheduleTime) {
+    public String getScheduleDescription(ScheduleType scheduleType, DayOfWeek scheduleDay, Integer scheduleDayOfMonth, LocalTime scheduleTime, String cronExpression) {
         if (scheduleType == null) {
             return "";
         }
@@ -167,6 +169,8 @@ public class PipelineServiceImpl implements PipelineService {
                     return scheduleTime != null ? "Day " + scheduleDayOfMonth + " at " + scheduleTime.format(timeFmt) : "Day " + scheduleDayOfMonth;
                 }
                 return "Monthly";
+            case CUSTOM:
+                return cronExpression != null ? cronExpression : "Custom Schedule";
             default:
                 return scheduleType.name();
         }

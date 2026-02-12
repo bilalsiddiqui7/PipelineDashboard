@@ -21,6 +21,7 @@ public class PipelineResponseDto {
     private LocalTime scheduleTime;
     private DayOfWeek scheduleDay;
     private Integer scheduleDayOfMonth;
+    private String cronExpression;
 
     private List<PipelineStepDto> steps;
 }

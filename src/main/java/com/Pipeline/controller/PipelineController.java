@@ -4,6 +4,7 @@ package com.Pipeline.controller;
 import com.Pipeline.dto.*;
 import com.Pipeline.service.PipelineService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,13 +28,13 @@ public class PipelineController {
         return ResponseEntity.ok(pipelineService.getPipeline(id));
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PipelineResponseDto> create(@RequestBody PipelineRequestDto dto) {
         PipelineResponseDto created = pipelineService.createPipeline(dto);
         return ResponseEntity.created(URI.create("/pipelines/" + created.getId())).body(created);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PipelineResponseDto> update(@PathVariable Long id, @RequestBody PipelineRequestDto dto) {
         PipelineResponseDto updated = pipelineService.updatePipeline(id, dto);
         return ResponseEntity.ok(updated);
