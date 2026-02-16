@@ -1,4 +1,4 @@
-package com.Pipeline.enums;
+package com.pipeline.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

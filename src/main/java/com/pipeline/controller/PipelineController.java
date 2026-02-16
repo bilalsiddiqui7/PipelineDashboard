@@ -1,8 +1,8 @@
-package com.Pipeline.controller;
+package com.pipeline.controller;
 
 
-import com.Pipeline.dto.*;
-import com.Pipeline.service.PipelineService;
+import com.pipeline.dto.*;
+import com.pipeline.service.PipelineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/pipelines")
 @RequiredArgsConstructor
 public class PipelineController {

@@ -1,10 +1,8 @@
-package com.Pipeline.dto;
+package com.pipeline.dto;
 
-import com.Pipeline.enums.ConfigType;
-import com.Pipeline.enums.StepType;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.pipeline.enums.ConfigType;
+import com.pipeline.enums.StepType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,5 +16,5 @@ public class PipelineStepDto {
     private int stepOrder;
 
     private ConfigType configType;
-    private Object configContent;
+    private String configContent;
 }

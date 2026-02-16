@@ -1,7 +1,7 @@
-package com.Pipeline.model;
+package com.pipeline.model;
 
-import com.Pipeline.enums.ConfigType;
-import com.Pipeline.enums.StepType;
+import com.pipeline.enums.ConfigType;
+import com.pipeline.enums.StepType;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,7 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -33,6 +32,9 @@ public class PipelineStep {
 
     @Enumerated(EnumType.STRING)
     private ConfigType configType;
+
+    @Column(name = "config_s3_key")
+    private String configS3Key;
 
 //    @Lob
     @Column(name = "config_content", columnDefinition = "TEXT")

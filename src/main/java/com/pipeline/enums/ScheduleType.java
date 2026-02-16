@@ -1,4 +1,4 @@
-package com.Pipeline.enums;
+package com.pipeline.enums;
 
 public enum ScheduleType {
     MANUAL,

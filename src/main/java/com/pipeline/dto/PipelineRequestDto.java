@@ -1,6 +1,6 @@
-package com.Pipeline.dto;
+package com.pipeline.dto;
 
-import com.Pipeline.enums.ScheduleType;
+import com.pipeline.enums.ScheduleType;
 import lombok.Builder;
 import lombok.Data;
 

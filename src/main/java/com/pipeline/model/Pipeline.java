@@ -1,6 +1,6 @@
-package com.Pipeline.model;
+package com.pipeline.model;
 
-import com.Pipeline.enums.ScheduleType;
+import com.pipeline.enums.ScheduleType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

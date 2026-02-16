@@ -1,16 +1,10 @@
-package com.Pipeline.dto;
+package com.pipeline.dto;
 
-import com.Pipeline.enums.ScheduleType;
-import com.Pipeline.enums.StepType;
+import com.pipeline.enums.StepType;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
 import java.util.List;
-import java.util.Locale;
 
 @Data
 @Builder
