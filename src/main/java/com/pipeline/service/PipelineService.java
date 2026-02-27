@@ -1,8 +1,8 @@
 package com.pipeline.service;
 
-import com.pipeline.dto.PipelineRequestDto;
-import com.pipeline.dto.PipelineResponseDto;
-import com.pipeline.dto.PipelineSummaryDto;
+import com.pipeline.dto.pipeline.PipelineRequestDto;
+import com.pipeline.dto.pipeline.PipelineResponseDto;
+import com.pipeline.dto.pipeline.PipelineSummaryDto;
 
 import java.util.List;
 

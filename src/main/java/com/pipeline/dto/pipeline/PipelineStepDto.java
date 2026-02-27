@@ -1,4 +1,4 @@
-package com.pipeline.dto;
+package com.pipeline.dto.pipeline;
 
 import com.pipeline.enums.ConfigType;
 import com.pipeline.enums.StepType;

@@ -22,6 +22,30 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
+    @ExceptionHandler(AirflowConnectionException.class)
+    public ResponseEntity<String> handleAirflowConnectionError(AirflowConnectionException ex) {
+        log.error("Airflow connection error", ex);
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(ApprovalNotFoundException.class)
+    public ResponseEntity<String> handleApprovalNotFound(ApprovalNotFoundException ex) {
+        log.error("Approval not found", ex);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(PendingApprovalExistsException.class)
+    public ResponseEntity<String> handlePendingApprovalExists(PendingApprovalExistsException ex) {
+        log.error("Pending approval already exists", ex);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidApprovalStatusException.class)
+    public ResponseEntity<String> handleInvalidApprovalStatus(InvalidApprovalStatusException ex) {
+        log.error("Invalid approval status", ex);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneral(Exception ex) {
         log.error("Unexpected error", ex);

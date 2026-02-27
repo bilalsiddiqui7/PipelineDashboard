@@ -36,7 +36,6 @@ public class PipelineStep {
     @Column(name = "config_s3_key")
     private String configS3Key;
 
-//    @Lob
     @Column(name = "config_content", columnDefinition = "TEXT")
     private String configContent;
 

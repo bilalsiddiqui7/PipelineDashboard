@@ -41,7 +41,6 @@ public class Pipeline {
     @Max(31)
     private Integer scheduleDayOfMonth; // for monthly (1-31)
 
-//    @Cron
     @Column(name = "cron_expression")
     private String cronExpression;
 

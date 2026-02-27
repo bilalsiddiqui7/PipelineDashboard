@@ -1,7 +1,9 @@
 package com.pipeline.controller;
 
 
-import com.pipeline.dto.*;
+import com.pipeline.dto.pipeline.PipelineRequestDto;
+import com.pipeline.dto.pipeline.PipelineResponseDto;
+import com.pipeline.dto.pipeline.PipelineSummaryDto;
 import com.pipeline.service.PipelineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -25,7 +27,7 @@ public class PipelineController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PipelineResponseDto> get(@PathVariable Long id) { // TODO - VERIFY IS THIS API IS ACTUALLY REQUIRED
+    public ResponseEntity<PipelineResponseDto> get(@PathVariable Long id) { // TODO -  remove this api this was just for testing
         return ResponseEntity.ok(pipelineService.getPipeline(id));
     }
 

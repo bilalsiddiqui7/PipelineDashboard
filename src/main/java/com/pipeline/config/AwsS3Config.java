@@ -25,7 +25,7 @@ public class AwsS3Config {
 //        @Value("${aws.s3.path-style-access:false}")
 //        private boolean pathStyle;
 
-    // optional properties, TODO REMOVED WHEN WE CAN ASSUME ENV VARS
+    // optional properties, TODO REMOVED - WE CAN ASSUME ENV VARS
     @Value("${aws.accessKeyId:}")
     private String accessKeyId;
 
@@ -36,7 +36,6 @@ public class AwsS3Config {
     public S3Client s3Client() {
         S3ClientBuilder builder = S3Client.builder().region(Region.of(awsRegion));
 
-        // Credentials: prefer explicit static values if provided, otherwise default provider chain
         if (accessKeyId != null && !accessKeyId.isBlank() && secretAccessKey != null && !secretAccessKey.isBlank()) {
             AwsBasicCredentials creds = AwsBasicCredentials.create(accessKeyId.trim(), secretAccessKey.trim());
             builder.credentialsProvider(StaticCredentialsProvider.create(creds));
